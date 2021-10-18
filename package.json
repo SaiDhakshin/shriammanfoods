@@ -1,13 +1,13 @@
 {
-  "name": "auth-backend",
+  "name": "shriamman",
   "version": "1.0.0",
-  "description": "",
+  "description": "This repo has the same code or does the same thing as my nodejs-auth repo but splits up the logic to use the MVC.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "author": "",
+  "author": "saidhakshin,kavin",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -31,5 +31,16 @@
     "sequelize-cli": "^6.2.0",
     "textnow.js": "^0.1.6",
     "twilio": "^3.67.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaiDhakshin/food-ordering.git"
+  },
+  "keywords": [
+    "food-order"
+  ],
+  "bugs": {
+    "url": "https://github.com/SaiDhakshin/food-ordering/issues"
+  },
+  "homepage": "https://github.com/SaiDhakshin/food-ordering#readme"
 }

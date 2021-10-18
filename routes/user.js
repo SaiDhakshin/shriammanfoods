@@ -19,7 +19,7 @@ function checkNotAuthenticated(req,res,next){
 }
 
 router.get("/",checkAuthenticated,(req,res) => {
-    res.render("index");
+    res.render("home");
 })
 
 router.get("/products",productController.getProducts);

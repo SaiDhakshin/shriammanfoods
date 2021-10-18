@@ -75,6 +75,7 @@ const fileFilter = (req,file,cb) =>{
 //config
 app.set('view engine','ejs');
 
+
 app.use(express.static(__dirname + '/public'));
 app.use('/images',express.static(__dirname + '/images'));
 // app.use(express.static(__dirname + '/ images'));
