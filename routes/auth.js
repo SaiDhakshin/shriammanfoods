@@ -23,11 +23,23 @@ function checkNotAuthenticated(req,res,next){
     res.redirect("/login");
 }
 
+function callbackRedirect(req,res,next){
+    if(req.user.isAdmin){
+        return res.redirect("/admin/dashboard");
+    }else{
+        return res.redirect("/itemOrder");
+    }
+}
+
 router.post("/register",checkAuthenticated,authController.register);
 
 router.get("/auth/google",OAuthController.authGoogle);
 
-router.get("/auth/google/callback" ,OAuthController.authGoogleCallBack);
+router.get("/auth/google/callback" , OAuthController.authGoogleCallBack);
+
+
+
+
 
 // app.post("/login", (req,res) => {
 //     res.render("login")

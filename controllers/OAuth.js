@@ -6,8 +6,10 @@ const passport = require('passport');
 exports.authGoogle = passport.authenticate('google' ,{ scope : ['email','profile']});
 
 exports.authGoogleCallBack =  passport.authenticate('google' , {
-    successRedirect:"/dashboard",
+    successRedirect:"/itemOrder",
     failureRedirect:"/"
 });
+
+
 
 

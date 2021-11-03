@@ -72,7 +72,7 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user,done)=>{
-    console.log(user.id);
+    console.log(user);
     done(null,user.id);
     console.log("OAuth");
 })

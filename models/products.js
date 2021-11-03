@@ -21,6 +21,9 @@ const Product = sequelize.define('product',{
     description : {
         type: Sequelize.STRING,
         // allowNull : false
+    },
+    quantity : {
+        type : Sequelize.INTEGER
     }
 })
 

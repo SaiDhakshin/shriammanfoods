@@ -6,16 +6,32 @@ const productController = require("../controllers/products");
 
 const authController = require("../controllers/auth");
 
+router.get("/",authController.index);
+
+router.get("/dashboard",authController.getAdminDashboard);
+
+router.get("/auth/google",authController.authGoogle);
+
+router.get("/auth/google/callback" ,authController.authGoogleCallBackAdmin);
+
 router.get("/register",authController.getAdminRegister);
 
 router.post("/login",authController.postAdminLogin);
 
-router.get("/add-products",productController.getAddProducts);
+router.get("/dashboard/add-products",productController.getAddProducts);
 
-router.post("/add-products",productController.postAddProducts);
+router.post("/dashboard/add-products",productController.postAddProducts);
 
-router.post("/delete/:id",productController.postDelete);
+router.post("/dashboard/delete/:id",productController.postDelete);
 
-router.post("/update",productController.postUpdate);
+router.get("/dashboard/update",productController.getProductId);
+
+router.post("/dashboard/update/:id",productController.postUpdate);
+
+router.get("/dashboard/orders",productController.getOrder);
+
+router.get("/dashboard/confirmOrders",productController.getConfirmOrder);
+
+router.get("/dashboard/products",productController.getAdminProducts);
 
 module.exports = router;

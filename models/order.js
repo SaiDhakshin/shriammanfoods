@@ -8,6 +8,26 @@ const Order = sequelize.define('order',{
         autoIncrement : true,
         allowNull : false,
         primaryKey : true
+    },
+    name : {
+        type : Sequelize.STRING,
+        allowNull : false
+    },
+    mobile_number : {
+        type : Sequelize.STRING,
+        allowNull : false
+    },
+    address : {
+        type : Sequelize.STRING,
+        allowNull : false
+    },
+    product : {
+        type : Sequelize.STRING,
+        allowNull : false
+    },
+    quantity : {
+        type : Sequelize.INTEGER,
+        allowNull : false
     }
 })
 

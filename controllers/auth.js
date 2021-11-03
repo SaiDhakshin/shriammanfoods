@@ -8,6 +8,11 @@ const intializePassport = require('../util/passportConfig');
 
 intializePassport(passport);
 
+exports.index = (req,res) =>{
+
+    res.render("adminlogin");
+}
+
 exports.register = async (req,res) => {
     console.log(req.body);
     let {name , email , password , password2} = req.body;
@@ -74,6 +79,17 @@ exports.register = async (req,res) => {
     
     console.log(hashedPassword);
     
+}
+
+exports.authGoogle =  passport.authenticate('google' ,{ scope : ['email','profile']});
+
+exports.authGoogleCallBackAdmin = passport.authenticate('google' , {
+    successRedirect:"/dashboard",
+    failureRedirect:"/admin"
+});
+
+exports.getAdminDashboard = (req,res) => {
+    res.render("adminpanel");
 }
 
 exports.getAdminRegister = async (req,res) => {

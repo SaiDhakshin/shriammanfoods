@@ -6,23 +6,22 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- fontawesome -->
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="/js/script.js"></script>
     <title>Shri Amman</title>
 </head>
 <body>
-  <!-- Header -->
-  <section id="header">
-    <div class="header container">
-      <div class="nav-bar">
-        <div class="brand">
-          <a href="#batter"><h1><span>K</span>avin <span>R</span>aj</h1></a>
-        </div>
-      </div>
-    </div>
-  </section>
 
     <!-- shri section -->
     <section id="batter">
         <div class="batter container">
+            <section id="about">
+                <div class="about container">
+                  <div class="col-left">
+                    <div class="about-img">
+                      <img src="/img/batter.png" alt="img">
+                    </div>
+                  </div>
+                </section>
             <div>
                 <h1>Hello, <span></span></h1>
                 <h1>My Name is<span></span></h1>
@@ -34,60 +33,35 @@
     <!-- shri name  section -->
 
     <!--Service section start-->
-  
-      <section id="services">
-          <div class="services container">
-              <div class="service-top">
-                  <h1 class="section-title">serv<span>i</span>ces</h1>
-                  <p>The region of Guria between 1902 and 1906, against the Russian Empire. 
-                      It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
-                      The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire. 
-                      The 1905 Russian Revolution led to uprisings throughout the Empire, including Georgia, and in reaction the imperial authorities deployed the military to end the rebellions.
-                       The peasants were able to fend off a small force of Cossacks, but overwhelming military force was used to re-assert control in 1906.
-                        Some of the Republic's leaders were executed, imprisoned or exiled, but others later played prominent roles in the 1918–1921 Democratic Republic of Georgia.
-                       The Gurian Republic demonstrated that peasants could participate in the socialist movement, an idea previously downplayed by leading Marxists.</p>
-              </div>
-              <div class="service-bottom">
-                  <div class="service-item">
-                    <div class="icon"><img src="https://img.icons8.com/ios/50/000000/circled-i.png"/>
-                    </div>
-                    <h2>Idly dosa</h2>
-                    <p>region of Guria between 1902 and 1906, against the Russian Empire. 
-                        It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
-                        The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire.
-                    </p>
-                  </div>
-                  
+    <section id="services">
+      <h1 class="product_title black">Buy</h1>
+      <div class="services container">
+        <div class="service-bottom" >
+                  <% for(p of products) {%>
                     <div class="service-item">
-                      <div class="icon">
-                        <img src="https://img.icons8.com/ios/50/000000/circled-d.png"/>
+                      <h2><li ><a class="product_title" href="products/<%= p.id %>"><%= p.title %></a></li></h2>
+                      <li class="product_title">Rs:<%= p.price %></li>
+                      <div class="flex">
+                        <div class="image">
+                            <img  class="image" src="/<%= p.imageUrl %>" alt="<%= p.imageUrl%>">
+                        </div>
+                        <li class="description"><%= p.description %></li>
                       </div>
-                      <h2>Idly dosa</h2>
-                      <p>region of Guria between 1902 and 1906, against the Russian Empire. 
-                          It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
-                          The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire.
+                      <p><li class="description"><%= p.description %></li>
+                        <form action="/cart" method="POST">
+                            <button class="order">Add To Cart</button>
+                            <input type="hidden" name="id" value="<%= p.id %>">
+                        </form>
                       </p>
                       <form action="/item" method="post">
                         <input type="hidden" name="product_name" value="dosa"> 
                         <button class="order">Order</button>
                       </form>
                     </div>
-                   
-                        <div class="service-item">
-                          <div class="icon">
-                            <img src="https://img.icons8.com/bubbles/50/000000/synchronize.png"/>
-                          </div>
-                          <h2>Idly dosa</h2>
-                          <p>region of Guria between 1902 and 1906, against the Russian Empire. 
-                              It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
-                              The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire.
-                          </p>
-                        </div>
+                    <% } %>
+      
                        
                             <div class="service-item">
-                              <div class="icon">
-                                <img src="https://img.icons8.com/ios/50/000000/circled-y.png"/>
-                              </div>
                               <h2>Idly dosa</h2>
                               <p>region of Guria between 1902 and 1906, against the Russian Empire. 
                                   It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
@@ -96,8 +70,42 @@
                             </div>
               </div>
           </div>
+          <ul>
+            <% if(messages.success_msg) { %>
+                <li><%=messages.success_msg %></li>
+            <% } %>
+        </ul>
+        
       </section> 
     <!--service section end--> 
+
+    <!-- map -->
+<section>
+  <h3 class="product_title black">Location</h3>
+  <div id="map"></div>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeXSkV2QE3Jw1YvcYUxY-vIMr1OyXureo&callback=initMap"
+  async
+></script>
+</section>
+
+<script>
+
+function initMap() {
+    // The location of Uluru
+    const uluru = { lat: 10.351582, lng: 77.974320 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 14,
+      center: uluru,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
+  }
+</script>
 <!--project section--> 
 <section id ="projects">
   <div class="projects container">
@@ -160,6 +168,7 @@
   </div>
 </section>
 <!--project section end--> 
+
 
 
 <!--start About Section-->

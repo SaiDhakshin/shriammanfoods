@@ -5,6 +5,11 @@ const GUser = require("../models/GUser");
 const CartShop = require('../models/cartshop');
 const Sequelize = require('sequelize');
 
+const nodemailer = require('nodemailer');
+
+var product = " ";
+var email = " ";
+let ptitle=" ";
 
 
 
@@ -18,7 +23,7 @@ exports.getAddProducts =(req,res)=>{
 
 exports.postAddProducts = async (req,res)=>{
     console.log(req.body);
-    let{name,price,description} = req.body;
+    let{name,price,description,quantity} = req.body;
     let imageUrl = req.file;
     console.log(req.session.userId);
     GUser.findByPk(req.session.userId).then(res => {
@@ -35,26 +40,41 @@ exports.postAddProducts = async (req,res)=>{
         res.redirect("/admin/add-products"); 
     }
     const imagePath = imageUrl.path;
-    req.user.createProduct({
-        title : name,
-        price : price,
-        imageUrl : imagePath,
-        description : description
+    await Product.findAll({where : {title : name}}).then(products => {
+        if(products[0] == null){
+
+            req.user.createProduct({
+                title : name,
+                price : price,
+                imageUrl : imagePath,
+                description : description,
+                quantity : quantity
+            })
+            //  Product.create({
+            //     title : name,
+            //     price : price,
+            //     imageUrl : imageUrl,
+            //     description : description,
+            //     userId : req.user.id
+            // })
+            .then(result =>{
+                console.log(result);
+                console.log(result.dataValues);
+                ptitle = result.dataValues.title;
+                req.flash('success_msg',result.dataValues.title + ' Product successfully Added');
+                console.log('/admin/add-product works');
+                res.redirect("/admin/dashboard/add-products");  
+            }).catch(err =>{
+                console.log(err);
+            })
+        }else{
+            req.flash('success_msg',ptitle + ' Product already exists');
+                console.log('/admin/dashboard/add-product works');
+                res.redirect("/admin/dashboard/add-products"); 
+        }
+
     })
-    //  Product.create({
-    //     title : name,
-    //     price : price,
-    //     imageUrl : imageUrl,
-    //     description : description,
-    //     userId : req.user.id
-    // })
-    .then(result =>{
-        console.log(result);
-        console.log(result.dataValues);
-        req.flash('success_msg',result.dataValues.title + ' Product successfully Added');
-        console.log('/admin/add-product works');
-        res.redirect("/admin/add-products");  
-    }).catch(err =>{
+    .catch(err => {
         console.log(err);
     })
     // await pool.query("INSERT INTO product_table (name,price,imageUrl,description) VALUES ($1,$2,$3,$4) RETURNING *",[name,price,imageUrl,description],(err,res)=>{
@@ -79,6 +99,8 @@ exports.getProducts =async (req,res)=>{
     //         res.render('products',{products : result.rows});
     //     }
     // })
+    req.user.isAdmin = true;
+    console.log("Result is:" + req.user.isAdmin);
     await Product.findAll().then(products =>{
         // console.log(products);
         res.render('products',{products : products});
@@ -405,6 +427,123 @@ exports.getOrder = (req,res) =>{
     req.user.getOrders({include : ['products']})
     .then(orders => {
         res.render("orders",{orders : orders});
+
+    })
+    .catch(err =>{
+        console.log(err);
+    })
+}
+
+exports.postItem = (req,res) => {
+    console.log(req.body.product_name);
+    product = req.body.product_name;
+    res.redirect("/auth/google");
+}
+
+exports.getOrderItem = (req,res) => {
+    req.session.userId = req.user.id;
+    if(req.user.email == "saidhakshin75@gmail.com"){
+        res.redirect("/admin/dashboard");
+    }else{
+        res.render("itemOrder");
+    }
+}
+
+exports.postConfirm = async (req,res) => {
+    let {name , mobile_number , address , quantity } = req.body;
+    GUser.findByPk(req.session.userId).then(res => {
+        req.user = res;
+
+        email = res.email;
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
+
+    console.log(GUser.email);
+
+    req.user.createOrder({
+        name : name,
+        mobile_number  :  mobile_number,
+        address : address,
+        product : product,
+        quantity : quantity
+    })
+    .then(result =>{
+        console.log(result);
+        console.log(result.dataValues);
+        console.log(product);
+        res.render('confirm');
+    }).catch(err =>{
+        console.log(err);
+    })
+    
+        let transporter = await nodemailer.createTransport({
+            service : "gmail",
+            port : 467,
+            secure : true,
+            auth : {
+                user : 'saidhakshin75@gmail.com',
+                pass : 'qmpzFGH4563',
+            },
+        });
+        
+        let options = {
+            to : req.user.email,
+            from : 'saidhakshin75@gmail.com',
+            subject : "Order",
+            text : 'Hello',
+            html : "<h2>Hello , Admin <br> The Order Details Are : <br> Name : " + name + " Mobile Number : " + mobile_number + "Address : " + address + 
+            "Product : " + product + "Quantity : " + quantity + ".<br> That's all folks!</h2>"
+        }
+    
+        await transporter.sendMail(options , (err,info) => {
+            if(err){
+                console.log(err);
+            }
+            console.log(info.response);
+        })
+    
+    
+}
+
+exports.getAdminProducts = async (req,res) => {
+    await Product.findAll().then(products =>{
+        // console.log(products);
+        req.user.isAdmin = true;
+        console.log("IsAdmin : " + req.user.isAdmin);
+        res.render('products',{products : products});
+    }).catch(err=>{
+        console.log(err);
+    })
+  
+}
+
+exports.getUpdate = async (req,res) => {
+    const edit = true;
+    const id = req.body.id;
+    await Product.findAll({where : {id : id}}).then(products =>{
+        // console.log(products);
+        res.render('add-products',{edit : edit , prods : products[0]});
+    }).catch(err=>{
+        console.log(err);
+    })
+  
+}
+
+exports.getConfirmOrder = async (req,res) => {
+    GUser.findByPk(req.session.userId).then(res => {
+        req.user = res;
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+    req.user.getOrders()
+    .then(orders => {
+        console.log( "Orders here : " + orders);
+        res.render("confirmOrder",{orders : orders});
 
     })
     .catch(err =>{
