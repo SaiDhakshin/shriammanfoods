@@ -87,15 +87,24 @@
 ></script>
 </section>
 
+<section>
+  <h3 class="product_title black">Location</h3>
+  <div id="umap"></div>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeXSkV2QE3Jw1YvcYUxY-vIMr1OyXureo&callback=initMap"
+  async
+></script>
+</section>
+
 
 
 <script>
 
 function initMap() {
-  navigator.geolocation.getCurrentPosition(position => {
-      console.log("Position of your location : " + position);
-  })
     // The location of Uluru
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude + "," + position.coords.longitude);
+    })
     const uluru = { lat: 10.351582, lng: 77.974320 };
     // The map, centered at Uluru
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -103,11 +112,13 @@ function initMap() {
       center: uluru,
     });
     // The marker, positioned at Uluru
-    // const marker = new google.maps.Marker({
-    //   position: uluru,
-    //   map: map,
-    // });
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
   }
+
+
 
 </script>
 <!--project section--> 
