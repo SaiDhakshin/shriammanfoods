@@ -54,7 +54,8 @@
                         </form>
                       </p>
                       <form action="/item" method="post">
-                        <input type="hidden" name="product_name" value="dosa"> 
+                        <input type="hidden" name="product_name" value="<%= p.title%>"> 
+                        <input type="hidden" name="id" value="<%= p.id%>">
                         <button class="order">Order</button>
                       </form>
                     </div>
@@ -62,11 +63,8 @@
       
                        
                             <div class="service-item">
-                              <h2>Idly dosa</h2>
-                              <p>region of Guria between 1902 and 1906, against the Russian Empire. 
-                                  It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns. 
-                                  The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire.
-                              </p>
+                              <h2>More Coming Soon!</h2>
+                              <p>We are still improving the Site.</p>
                             </div>
               </div>
           </div>
@@ -89,9 +87,14 @@
 ></script>
 </section>
 
+
+
 <script>
 
 function initMap() {
+  navigator.geolocation.getCurrentPosition(position => {
+      console.log("Position of your location : " + position);
+  })
     // The location of Uluru
     const uluru = { lat: 10.351582, lng: 77.974320 };
     // The map, centered at Uluru
@@ -100,11 +103,12 @@ function initMap() {
       center: uluru,
     });
     // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-      position: uluru,
-      map: map,
-    });
+    // const marker = new google.maps.Marker({
+    //   position: uluru,
+    //   map: map,
+    // });
   }
+
 </script>
 <!--project section--> 
 <section id ="projects">
@@ -214,7 +218,7 @@ function initMap() {
       <div class="contact-item">
         <div class="icon"><i class="fas fa-map-marker-alt fa-6x"></i></div>
           <div class="contact-info">
-            <h1>address</h1>
+            <h1>Address</h1>
             <h2>63823362**</h2>
             <h2>93442236**</h2>
           </div>

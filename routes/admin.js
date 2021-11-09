@@ -34,4 +34,6 @@ router.get("/dashboard/confirmOrders",productController.getConfirmOrder);
 
 router.get("/dashboard/products",productController.getAdminProducts);
 
+router.get("/dashboard/itemOrder",productController.getAdminOrder);
+
 module.exports = router;

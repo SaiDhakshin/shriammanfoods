@@ -5,16 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <script src="/js/script.js" type="text/javascript"></script>
     <title>itemOrder</title>
 </head>
 <body>
-    <form action="/orderConfirm" method="post">
+    <ul>
+        <% if(errors) {%>
+
+           
+                <li><%= errors.msg%></li>
+                
+            <% } %>
+    </ul>
+    <form action="/orderConfirm" method="post" >
         <h2>Enter Details</h2>
-        <input type="text" placeholder="Enter Your Name:" name="name"><br>
-        <input type="text" placeholder="Enter Mobile Number" name="mobile_number"><br>
-        <input type="text" placeholder="Enter Address:" name="address"><br>
-        <input type="number" placeholder="Quantity" name="quantity"><br>
-        <button type="submit">Confirm</button>
-    </form>
+        <input type="text" placeholder="Enter Your Name:" name="name" id="name" required><br>
+        <input type="text" placeholder="Enter Mobile Number (Omit country code)" name="mobile_number" id="mobile_number" min="10" required><br>
+        <input type="text" placeholder="Enter Address:(only dindugal)" name="address" id="address" required><br>
+        <input type="number" placeholder="Quantity" name="quantity" id="quantity" required><br>
+        <% if(p) {%>
+            <li>The Quantity left for this item is : <%= p.quantity%></li>
+            <% } %>
+            <button type="submit" id="confirm" onclick="onSubmit()">Confirm</button>
+        </form>
+        <% if(location) { %>
+            <% location.location() %>
+            <% } %>
+        <button id="location" onclick="location()">Location</button>
+    <script>
+
+    function onSubmit(){
+      console.log("OnSubmit Ran");
+
+      let name = document.getElementById("name");
+      let mobile_number = document.getElementById("mobile_number");
+      let address = document.getElementById("address");
+      let quantity = document.getElementById("quantity");
+
+      const regex = /^[a-zA-Z]+$/;
+
+      if(regex.match(name.value)){
+          alert("Name is null");
+      }
+
+      if(quantity > 10){
+          alert("Quantity greater than available.")
+      }
+
+      console.log("The order is =" + name + " " + mobile_number + " " + address + " " + quantity);
+  }
+    </script>
 </body>
 </html>

@@ -1,13 +1,19 @@
 const pool = require('../util/database');
 const Product = require('../models/products');
 const GUser = require("../models/GUser");
+const Order = require("../models/order");
+
+const { validationResult} = require('express-validator');
 
 const CartShop = require('../models/cartshop');
 const Sequelize = require('sequelize');
 
 const nodemailer = require('nodemailer');
 
+const location = require('../util/script');
+
 var product = " ";
+let prod_id = null;
 var email = " ";
 let ptitle=" ";
 
@@ -99,8 +105,6 @@ exports.getProducts =async (req,res)=>{
     //         res.render('products',{products : result.rows});
     //     }
     // })
-    req.user.isAdmin = true;
-    console.log("Result is:" + req.user.isAdmin);
     await Product.findAll().then(products =>{
         // console.log(products);
         res.render('products',{products : products});
@@ -437,73 +441,106 @@ exports.getOrder = (req,res) =>{
 exports.postItem = (req,res) => {
     console.log(req.body.product_name);
     product = req.body.product_name;
+    console.log("Selected product" + product);
+    prod_id = req.body.id;
+    console.log("Getting product id here : " + prod_id);
     res.redirect("/auth/google");
 }
 
-exports.getOrderItem = (req,res) => {
+exports.getAdminOrder = (req,res) => {
+    res.render("itemOrder");
+}
+
+exports.getOrderItem = async (req,res) => {
     req.session.userId = req.user.id;
     if(req.user.email == "saidhakshin75@gmail.com"){
         res.redirect("/admin/dashboard");
     }else{
-        res.render("itemOrder");
+      
+         Product.findByPk(prod_id).then(products => {
+             console.log("Product quantity : " + products);
+             res.render("itemOrder",{p : products , errors : null, location : location});
+
+         })
+         .catch(err => {
+             console.log(err);
+         })
     }
 }
 
 exports.postConfirm = async (req,res) => {
-    let {name , mobile_number , address , quantity } = req.body;
-    GUser.findByPk(req.session.userId).then(res => {
-        req.user = res;
+    // var regex=/^[a-zA-Z]+$/;
+    const errors = validationResult(req);
 
-        email = res.email;
-    })
-    .catch(err => {
-        console.log(err);
-    })
-
-
-    console.log(GUser.email);
-
-    req.user.createOrder({
-        name : name,
-        mobile_number  :  mobile_number,
-        address : address,
-        product : product,
-        quantity : quantity
-    })
-    .then(result =>{
-        console.log(result);
-        console.log(result.dataValues);
-        console.log(product);
-        res.render('confirm');
-    }).catch(err =>{
-        console.log(err);
-    })
-    
-        let transporter = await nodemailer.createTransport({
-            service : "gmail",
-            port : 467,
-            secure : true,
-            auth : {
-                user : 'saidhakshin75@gmail.com',
-                pass : 'qmpzFGH4563',
-            },
-        });
+    if(!errors.isEmpty()){
+        console.log(errors.array());
+        res.render("itemOrder",{errors : errors.array()[0]});
+    }else{
         
-        let options = {
-            to : req.user.email,
-            from : 'saidhakshin75@gmail.com',
-            subject : "Order",
-            text : 'Hello',
-            html : "<h2>Hello , Admin <br> The Order Details Are : <br> Name : " + name + " Mobile Number : " + mobile_number + "Address : " + address + 
-            "Product : " + product + "Quantity : " + quantity + ".<br> That's all folks!</h2>"
-        }
+        let {name , mobile_number , address , quantity } = req.body;
     
-        await transporter.sendMail(options , (err,info) => {
-            if(err){
-                console.log(err);
-            }
-            console.log(info.response);
+        // if(regex.match(name)){
+        //     alert("Name contains numbers.");
+        // }
+        GUser.findByPk(req.session.userId).then(res => {
+            req.user = res;
+    
+            email = res.email;
         })
+        .catch(err => {
+            console.log(err);
+        })
+        Product.findByPk(prod_id).then(res => {
+            console.log(res.title);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        console.log(GUser.email);
+        console.log(product);
+        req.user.createOrder({
+            name : name,
+            mobile_number  :  mobile_number,
+            address : address,
+            product : product,
+            quantity : quantity
+        })
+        .then(result =>{
+            console.log(result);
+            console.log(result.dataValues);
+            console.log(product);
+            res.render('confirm');
+        }).catch(err =>{
+            console.log(err);
+        })
+        
+            let transporter = await nodemailer.createTransport({
+                service : "gmail",
+                port : 467,
+                secure : true,
+                auth : {
+                    user : 'saidhakshin75@gmail.com',
+                    pass : 'qmpzFGH4563',
+                },
+            });
+            
+            let options = {
+                to : req.user.email,
+                from : 'saidhakshin75@gmail.com',
+                subject : "Order",
+                text : 'Hello',
+                html : "<h2>Hello , Admin <br> The Order Details Are : <br> Name : " + name + " Mobile Number : " + mobile_number + "Address : " + address + 
+                "Product : " + product + "Quantity : " + quantity + ".<br> That's all folks!</h2>"
+            }
+        
+            await transporter.sendMail(options , (err,info) => {
+                if(err){
+                    console.log(err);
+                }
+                console.log(info.response);
+            })
+    }
+
     
     
 }
@@ -533,20 +570,30 @@ exports.getUpdate = async (req,res) => {
 }
 
 exports.getConfirmOrder = async (req,res) => {
-    GUser.findByPk(req.session.userId).then(res => {
-        req.user = res;
-        console.log(res);
+
+    Order.findAll().then(orders => {
+        console.log("All Orders" + orders);
+        res.render("confirmOrder",{orders : orders});
     })
     .catch(err => {
         console.log(err);
-    })
-    req.user.getOrders()
-    .then(orders => {
-        console.log( "Orders here : " + orders);
-        res.render("confirmOrder",{orders : orders});
 
     })
-    .catch(err =>{
-        console.log(err);
-    })
+
+    // GUser.findByPk(req.session.userId).then(res => {
+    //     req.user = res;
+    //     console.log(res);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // })
+    // req.user.getOrders()
+    // .then(orders => {
+    //     console.log( "Orders here : " + orders);
+    //     res.render("confirmOrder",{orders : orders});
+
+    // })
+    // .catch(err =>{
+    //     console.log(err);
+    // })
 }

@@ -7,6 +7,8 @@ const productController = require('../controllers/products');
 
 const Product = require('../models/products');
 
+const { check } = require('express-validator/check');
+
 function checkAuthenticated(req,res,next){
     if(req.isAuthenticated()){
         return res.redirect("/dashboard");
@@ -55,6 +57,9 @@ router.post("/item",productController.postItem);
 
 router.get("/itemOrder",productController.getOrderItem);
 
-router.post("/orderConfirm",productController.postConfirm);
+router.post("/orderConfirm", check('name').isAlphanumeric().matches(/^[a-zA-Z]+$/).withMessage("Not a valid Name."),
+check('mobile_number').matches(/^[0-9]/).isLength({min : 10}).withMessage("Not a valid mobile number"),
+
+productController.postConfirm);
 
 module.exports = router;
