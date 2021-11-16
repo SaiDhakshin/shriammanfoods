@@ -2,6 +2,8 @@ const pool = require('../util/database');
 const Product = require('../models/products');
 const GUser = require("../models/GUser");
 const Order = require("../models/order");
+const fs = require('fs');
+const path = require('path');
 
 const { validationResult} = require('express-validator');
 
@@ -20,6 +22,7 @@ let ptitle=" ";
 
 
 const sequelize = require('../util/database');
+const { nextTick } = require('process');
 
 exports.getAddProducts =(req,res)=>{
     const edit = false;
@@ -490,55 +493,62 @@ exports.postConfirm = async (req,res) => {
         .catch(err => {
             console.log(err);
         })
-        Product.findByPk(prod_id).then(res => {
-            console.log(res.title);
+        Product.findByPk(prod_id).then(result => {
+            console.log(result.title);
+            if( quantity > result.quantity){
+                console.log("Quantity greater than available!");
+                req.flash('err_msg','Entered Quantity greater than available!')
+                res.redirect('/itemOrder');
+            }else{
+                console.log(GUser.email);
+                console.log(product);
+                req.user.createOrder({
+                    name : name,
+                    mobile_number  :  mobile_number,
+                    address : address,
+                    product : product,
+                    quantity : quantity
+                })
+                .then(result =>{
+                    console.log(result);
+                    console.log(result.dataValues);
+                    console.log(product);
+                    res.render('confirm');
+                }).catch(err =>{
+                    console.log(err);
+                })
+                
+                    let transporter =  nodemailer.createTransport({
+                        service : "gmail",
+                        port : 467,
+                        secure : true,
+                        auth : {
+                            user : 'saidhakshin75@gmail.com',
+                            pass : 'qmpzFGH4563',
+                        },
+                    });
+                    
+                    let options = {
+                        to : req.user.email,
+                        from : 'saidhakshin75@gmail.com',
+                        subject : "Order",
+                        text : 'Hello',
+                        html : "<h2>Hello , Admin <br> The Order Details Are : <br> Name : " + name + " Mobile Number : " + mobile_number + "Address : " + address + 
+                        "Product : " + product + "Quantity : " + quantity + ".<br> That's all folks!</h2>"
+                    }
+                
+                     transporter.sendMail(options , (err,info) => {
+                        if(err){
+                            console.log(err);
+                        }
+                        console.log(info.response);
+                    })
+            }
         })
         .catch(err => {
             console.log(err);
         })
-        console.log(GUser.email);
-        console.log(product);
-        req.user.createOrder({
-            name : name,
-            mobile_number  :  mobile_number,
-            address : address,
-            product : product,
-            quantity : quantity
-        })
-        .then(result =>{
-            console.log(result);
-            console.log(result.dataValues);
-            console.log(product);
-            res.render('confirm');
-        }).catch(err =>{
-            console.log(err);
-        })
         
-            let transporter = await nodemailer.createTransport({
-                service : "gmail",
-                port : 467,
-                secure : true,
-                auth : {
-                    user : 'saidhakshin75@gmail.com',
-                    pass : 'qmpzFGH4563',
-                },
-            });
-            
-            let options = {
-                to : req.user.email,
-                from : 'saidhakshin75@gmail.com',
-                subject : "Order",
-                text : 'Hello',
-                html : "<h2>Hello , Admin <br> The Order Details Are : <br> Name : " + name + " Mobile Number : " + mobile_number + "Address : " + address + 
-                "Product : " + product + "Quantity : " + quantity + ".<br> That's all folks!</h2>"
-            }
-        
-            await transporter.sendMail(options , (err,info) => {
-                if(err){
-                    console.log(err);
-                }
-                console.log(info.response);
-            })
     }
 
     
@@ -596,4 +606,28 @@ exports.getConfirmOrder = async (req,res) => {
     // .catch(err =>{
     //     console.log(err);
     // })
+}
+
+exports.getInvoice = (req,res,next) =>{
+    const orderId = req.params.orderId;
+    console.log(req.session.userId);
+    Order.findByPk(orderId).then(order => {
+        console.log(order);
+        if(order.dataValues.guserId != req.session.userId){
+            return (new Error("Unauthorized"));
+        }
+    }).catch(err => {
+        throw(err);
+    })
+    const invoiceName = 'order-' + orderId + '.pdf';
+    const invoicePath = path.join('invoices', invoiceName);
+    fs.readFile(invoicePath , (err,data) => {
+        if(err){
+            next(err);
+        }
+        res.setHeader('Content-Type' , 'application/pdf');
+        res.setHeader('Content-Disposition' , 'attachment; fileName="' + invoiceName + '"');
+        res.send(data);
+    })
+
 }

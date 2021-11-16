@@ -23,6 +23,7 @@
                     <th>Address</th>
                     <th>Product</th>
                     <th>Quantity</th>
+                    <th>Invoice</th>
                 </tr>
                 <% for(order of orders) { %>
                     <tr>
@@ -31,6 +32,7 @@
                         <td><%= order.dataValues.address%></td>
                         <td><%= order.dataValues.product%></td>
                         <td><%= order.dataValues.quantity%></td>
+                        <td><a href="/admin/dashboard/orders/<%= order.dataValues.id%>">Download</a></td>
                     </tr>
                     <% } %>
                     <% } %>

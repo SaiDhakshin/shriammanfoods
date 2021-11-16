@@ -32,6 +32,8 @@ router.get("/dashboard/orders",productController.getOrder);
 
 router.get("/dashboard/confirmOrders",productController.getConfirmOrder);
 
+router.get("/dashboard/orders/:orderId",productController.getInvoice);
+
 router.get("/dashboard/products",productController.getAdminProducts);
 
 router.get("/dashboard/itemOrder",productController.getAdminOrder);
