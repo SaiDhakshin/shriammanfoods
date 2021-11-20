@@ -4,6 +4,7 @@ const GUser = require("../models/GUser");
 const Order = require("../models/order");
 const fs = require('fs');
 const path = require('path');
+const PDFDocument = require('pdfkit');
 
 const { validationResult} = require('express-validator');
 
@@ -619,15 +620,38 @@ exports.getInvoice = (req,res,next) =>{
     }).catch(err => {
         throw(err);
     })
+    const PDFDoc = new PDFDocument();
     const invoiceName = 'order-' + orderId + '.pdf';
     const invoicePath = path.join('invoices', invoiceName);
-    fs.readFile(invoicePath , (err,data) => {
-        if(err){
-            next(err);
-        }
-        res.setHeader('Content-Type' , 'application/pdf');
-        res.setHeader('Content-Disposition' , 'attachment; fileName="' + invoiceName + '"');
-        res.send(data);
+
+    res.setHeader('Content-Type' , 'application/pdf');
+    res.setHeader('Content-Disposition' , 'inline; fileName="' + invoiceName + '"');
+
+    PDFDoc.pipe(fs.createWriteStream(invoicePath));
+    PDFDoc.pipe(res);
+
+    Order.findByPk(orderId).then(order => {
+        PDFDoc.fontSize(22).text('Invoice');
+        PDFDoc.fontSize(14).text(order.dataValues.product + "X" + order.dataValues.quantity);
+        PDFDoc.fontSize(20).text('Thanks for shopping');
+        PDFDoc.end();
+        
+    }).catch(err => {
+        throw(err);
     })
+
+    
+    
+    // fs.readFile(invoicePath , (err,data) => {
+    //     if(err){
+    //         next(err);
+    //     }
+    //     res.setHeader('Content-Type' , 'application/pdf');
+    //     res.setHeader('Content-Disposition' , 'attachment; fileName="' + invoiceName + '"');
+    //     res.send(data);
+    // })
+   
+  
+   
 
 }
