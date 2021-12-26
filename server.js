@@ -171,8 +171,8 @@ GUser.hasMany(Order);
 Order.belongsTo(GUser);
 
 sequelize
-// .sync({force : true})
-.sync()
+.sync({force : true})
+// .sync()
 // .then(result => {
 //     return GUser.findAll({where : {id : require.session.userId}});
 // })
