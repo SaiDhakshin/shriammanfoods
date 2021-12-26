@@ -31,22 +31,13 @@
         <input type="text" placeholder="Enter Mobile Number (Omit country code)" name="mobile_number" id="mobile_number" min="10" required><br>
         <input type="text" placeholder="Enter Address:(only dindugal)" name="address" id="address" required><br>
         <input type="number" placeholder="Quantity" name="quantity" id="quantity" required><br>
-        <% if(p) {%>
-            <li>The Quantity left for this item is : <%= p.quantity%></li>
-            <% } %>
-            <button type="submit" id="confirm" onclick="onSubmit()">Confirm</button>
-        </form>
-        <button id="location" onclick="location()">Location</button>
 
-        <section>
-            <h3 class="product_title black">Location</h3>
-            <div id="umap"></div>
-            <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeXSkV2QE3Jw1YvcYUxY-vIMr1OyXureo&callback=initMap"
-            async
-          ></script>
-          </section>
-    <script>
+            <button type="submit" id="confirm" >Confirm</button>
+        </form>
+        
+
+
+    <!-- <script>
 
 
     
@@ -73,6 +64,6 @@
   }
 
   
-    </script>
+    </script> -->
 </body>
 </html>

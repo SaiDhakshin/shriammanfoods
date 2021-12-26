@@ -5,6 +5,7 @@ const Order = require("../models/order");
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
+const fileHelper = require('../util/file');
 
 const { validationResult} = require('express-validator');
 
@@ -119,7 +120,7 @@ exports.getProducts =async (req,res)=>{
 
 exports.getProductId =  async(req,res) =>{
     const edit = req.query.edit;
-    const id = req.params.id;
+    const id = req.body.id;
     if(edit){
         await Product.findAll({where : {id : id}}).then(products =>{
             // console.log(products);
@@ -346,6 +347,7 @@ exports.removeQtyCart = (req,res) => {
 exports.postDelete = async (req,res)=>{
     const id = req.params.id;
     await Product.findByPk(id).then(product =>{
+        fileHelper.deleteFile(product.imageUrl);
         return product.destroy();
     }).then(result => {
         console.log("Product Deleted!");
@@ -359,16 +361,21 @@ exports.postDelete = async (req,res)=>{
 }
 
 exports.postUpdate = async (req,res) =>{
+    
     const id = req.body.id;
     let{name,price,description} = req.body;
     let imageUrl = req.file;
+
+    
+
     if(!imageUrl){
         req.flash("success_msg","Not a valid image");
-        res.render('add-products',{edit : edit});
+        res.render('add-products');
     }
 
     const imagePath = imageUrl.path;
     await Product.findByPk(id).then(product =>{
+            fileHelper.deleteFile(product.imageUrl);
             product.title = name;
             product.price = price;
             product.imageUrl = imagePath;
@@ -452,7 +459,7 @@ exports.postItem = (req,res) => {
 }
 
 exports.getAdminOrder = (req,res) => {
-    res.render("itemOrder");
+    res.render("itemOrder" , {errors : null});
 }
 
 exports.getOrderItem = async (req,res) => {
@@ -501,6 +508,9 @@ exports.postConfirm = async (req,res) => {
                 req.flash('err_msg','Entered Quantity greater than available!')
                 res.redirect('/itemOrder');
             }else{
+
+                    
+
                 console.log(GUser.email);
                 console.log(product);
                 req.user.createOrder({
@@ -511,10 +521,18 @@ exports.postConfirm = async (req,res) => {
                     quantity : quantity
                 })
                 .then(result =>{
+                    
                     console.log(result);
                     console.log(result.dataValues);
                     console.log(product);
-                    res.render('confirm');
+                    res.render('confirm' , {orders : {
+                        name : name,
+                    mobile_number  :  mobile_number,
+                    address : address,
+                    product : product,
+                    quantity : quantity,
+                    order : result.dataValues.id,
+                    }});
                 }).catch(err =>{
                     console.log(err);
                 })
@@ -525,7 +543,7 @@ exports.postConfirm = async (req,res) => {
                         secure : true,
                         auth : {
                             user : 'saidhakshin75@gmail.com',
-                            pass : 'qmpzFGH4563',
+                            pass : process.env.Gpass,
                         },
                     });
                     
@@ -623,6 +641,8 @@ exports.getInvoice = (req,res,next) =>{
     const PDFDoc = new PDFDocument();
     const invoiceName = 'order-' + orderId + '.pdf';
     const invoicePath = path.join('invoices', invoiceName);
+    const logoPath = path.join('public','img','logo.jpg');
+    
 
     res.setHeader('Content-Type' , 'application/pdf');
     res.setHeader('Content-Disposition' , 'inline; fileName="' + invoiceName + '"');
@@ -631,9 +651,23 @@ exports.getInvoice = (req,res,next) =>{
     PDFDoc.pipe(res);
 
     Order.findByPk(orderId).then(order => {
-        PDFDoc.fontSize(22).text('Invoice');
-        PDFDoc.fontSize(14).text(order.dataValues.product + "X" + order.dataValues.quantity);
-        PDFDoc.fontSize(20).text('Thanks for shopping');
+        PDFDoc.image(logoPath , {width : 250 , height : 250});
+        PDFDoc.fontSize(22).text('Invoice',{ align : 'center'});
+        PDFDoc.moveDown();
+        PDFDoc.moveDown();
+        PDFDoc.moveDown();
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(19).text('Your Order Summary');
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(14).text(order.dataValues.product + " x " + order.dataValues.quantity);
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(14).text('Total Amount : ' + 29 * order.dataValues.quantity);
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(19).text(' ');
+        PDFDoc.fontSize(14).text('Thanks for shopping');
         PDFDoc.end();
         
     }).catch(err => {

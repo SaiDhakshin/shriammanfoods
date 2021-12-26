@@ -26,7 +26,9 @@ router.post("/dashboard/delete/:id",productController.postDelete);
 
 router.get("/dashboard/update",productController.getProductId);
 
-router.post("/dashboard/update/:id",productController.postUpdate);
+router.post("/dashboard/update/:id",productController.getProductId);
+
+router.post("/dashboard/updated",productController.postUpdate);
 
 router.get("/dashboard/orders",productController.getOrder);
 

@@ -45,5 +45,8 @@
   "bugs": {
     "url": "https://github.com/SaiDhakshin/food-ordering/issues"
   },
-  "homepage": "https://github.com/SaiDhakshin/food-ordering#readme"
+  "homepage": "https://github.com/SaiDhakshin/food-ordering#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.0.7"
+  }
 }

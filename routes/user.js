@@ -34,6 +34,8 @@ router.get("/", async (req,res) => {
   
 })
 
+
+
 router.get("/products",productController.getProducts);
 
 router.get("/products/:id",productController.getProductId);

@@ -8,6 +8,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
     <script src="/js/script.js"></script>
     <title>Shri Amman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
@@ -16,29 +17,64 @@
         <div class="batter container">
             <section id="about">
                 <div class="about container">
-                  <div class="col-left">
-                    <div class="about-img">
-                      <img src="/img/batter.png" alt="img">
+                  
+                    <div class="col-left">
+                      
+                        <!-- <img src="/img/batter.png" alt="img"> -->
+                        <img class="logo" src='/img/logo.jpg'>
+                       
+                      
                     </div>
-                  </div>
-                </section>
-            <div>
-                <h1>Hello, <span></span></h1>
-                <h1>My Name is<span></span></h1>
-                <h1>kavin<span></span></h1>
-                <a href="#" type="button" class="cta">DJ gaming</a>
-            </div>  
+                    
+                 
+                      </section>
+                      <div>
+                      <h1>Welcome <span></span></h1>
+                      <h1>Shree Amman<span></span></h1>
+                      <h1>Batters<span></span></h1>
+                      <a href="#order" type="button" class="cta">ORDER</a>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                      <h1>Made For Dindigal With Love</h1>
+                    </div>  
+                    </div>
+                
         </div>
     </section>
     <!-- shri name  section -->
 
+    <!-- showcase -->
+
+
+    <section class="font-sans text-5xl card">
+      <h4 class="text-center font-sans text-6xl">The Benefits of our Traditional Breakfast</h4>
+      <br>
+      <h3 class="text-center">Idli</h3>
+      <br>
+      <p class="font-sans text-3xl text-center"> This healthy food is loaded with numerous health benefits. It is easy to cook , digest , lose weight<br>
+      easy to count your calories , loaded with iron and contains a good amount of fibre.<br>
+    It is oil-free and steamed in such a proportion so as to serve your delicious meal and fill your stomach.<br>
+  Did you Know that WHO reported that Idli is the best diet food in the world.</p>
+  <br>
+        <h3 class="text-center">Dosa</h3>
+        <br>
+        <p class="font-sans text-3xl text-center">
+          Dosa is easily digestable . It is a source of Vitamin C , which is an essential nutrient which is <br>
+          required by the body for developement and maintainence of blood vessels , cartilage and scar<br>
+          tissues. Dosa are low in saturated fat and healthy for your body.
+        </p>
+    </section>
+    
+
     <!--Service section start-->
     <section id="services">
-      <h1 class="product_title black">Buy</h1>
-      <div class="services container">
-        <div class="service-bottom" >
+      <h1 class="product_title black card">Buy</h1>
+      <div class="services container ">
+        <!-- <div class="service-bottom " >
                   <% for(p of products) {%>
-                    <div class="service-item">
+                    <div class="service-item wid">
                       <h2><li ><a class="product_title" href="products/<%= p.id %>"><%= p.title %></a></li></h2>
                       <li class="product_title">Rs:<%= p.price %></li>
                       <div class="flex">
@@ -66,7 +102,49 @@
                               <h2>More Coming Soon!</h2>
                               <p>We are still improving the Site.</p>
                             </div>
+      </div> -->
+
+              <% for(p of products){ %>
+              <div class="service-bottom wid " id="order">
+                
+                <div class="flex font-sans scale-150 m-8 wid" >
+                  <div class="flex-none w-96 relative image">
+                    <img src="/<%= p.imageUrl %>" alt="" class="absolute inset-0 w-full h-full object-cover ib" />
+                  </div>
+                  <div class="flex-auto p-6">
+                    <div class="flex flex-wrap">
+                      <h1 class="flex-auto text-3xl font-semibold text-gray-900 text-center">
+                        <a  href="/products/<%= p.id%>"><%= p.title %></a>
+                      </h1>
+                      <div class="text-lg font-semibold text-gray-500">
+                       <%= p.price%>
+                      </div>
+                      
+                    </div>
+                    <!-- <h1 class="flex-auto text-lg font-semibold text-gray-900">
+                      <%= p.description%>
+                    </h1> -->
+
+                    
+              
+                    <div class="flex space-x-4 mb-6 text-sm font-medium p-6">
+                      <div class="flex-auto flex space-x-4">
+                        <form action="/item" method="post">
+                          <input type="hidden" name="product_name" value="<%= p.title%>"> 
+                          <input type="hidden" name="id" value="<%= p.id%>">
+                          <% if(p.quantity < 1) {%>
+                            <h2>No Stock!</h2>
+                          <% }else{ %>
+
+                            <button class=" ml-64 h-10 px-6 font-semibold rounded-md bg-black text-white" >Order</button>
+                          <% } %>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+                </div>
               </div>
+              <% } %>
           </div>
           <ul>
             <% if(messages.success_msg) { %>
@@ -78,7 +156,7 @@
     <!--service section end--> 
 
     <!-- map -->
-<section>
+<section class="card">
   <h3 class="product_title black">Location</h3>
   <div id="map"></div>
   <script
@@ -87,14 +165,7 @@
 ></script>
 </section>
 
-<section>
-  <h3 class="product_title black">Location</h3>
-  <div id="umap"></div>
-  <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeXSkV2QE3Jw1YvcYUxY-vIMr1OyXureo&callback=initMap"
-  async
-></script>
-</section>
+
 
 
 
@@ -121,8 +192,8 @@ function initMap() {
 
 
 </script>
-<!--project section--> 
-<section id ="projects">
+<!-- project section--> 
+<!-- <section id ="projects">
   <div class="projects container">
     <div class="projects-header">
       <h1 class="section-title">Recent <span>Projects</span></h1>
@@ -181,8 +252,8 @@ function initMap() {
       </div>
     </div>
   </div>
-</section>
-<!--project section end--> 
+</section> -->
+<!--project section end  -->
 
 
 
@@ -195,12 +266,41 @@ function initMap() {
     </div>
   </div>
   <div class="col-right">
-    <h1 class="section-tilte">About<span>us</span></h1>
-    <h2>Founder of Shri Amman Batters</h2>
-    <p>region of Guria between 1902 and 1906, against the Russian Empire.
-       It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns.
-       The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire</p>
-       <a href="#" class="cta">Download Resume</a>
+    <h1 class="section-tilte font-sans text-4xl card">About <span>us</span></h1>
+    <section class="font-sans text-4xl card">
+      <p class="font-sans text-4xl subpixel-antialiased">In 2014  , We dreamed of sharing healthy idli / Dosa batter .
+         So we thought and started a company in Dindigal.
+        We make idli and dosa batter for our Customers just the way they made it at home.
+        Soon there were none left at the shelves because people loved our healthy preservative free Batter.
+        We are making a high quality "Idli Dosa Batter" under very hygenic environment.<br>
+        <br>
+      We are using the best in class dhal and RO - purified water with no other preservatives or soda added.<br>
+      <br>
+    We are making this with great love and care , which suits for all ages from kids to adults.<br></p>
+
+    <ul>
+      <h4 class="text-4xl">How To Use ? </h4>
+      <br>
+      <h4>To Make Idli</h4>
+      <br>
+      <li>Open the pack and add salt if required. The Batter is mildly salted only.</li>
+      <li>If you are making idli , directly scoop out the batter and pour it into the idli streamer.</li>
+      <li>Stir the batter before pouring it into the moulds of the idli steamer for the soft idli.</li>
+      <br>
+      <h4>To Make Dosa</h4>
+      <br>
+      <li>If you are making dosa , add some water to dilute the batter.</li>
+      <li>After dilution , the batter can no longer be used for making idli.</li>
+    </ul>
+    <br>
+      <h4>How To Store ? </h4>
+      <br>
+      <ul>
+        <li>Refrigerate at 0-5 degree . Bring the batter to room temperature before using it.</li>
+      </ul>
+      
+    </section>
+       
   </div>
 </div>
 </section>
@@ -208,7 +308,7 @@ function initMap() {
 <!--Contact us -->
 <section id="contact">
   <div class="contact container">
-    <div><h1 class="section-tilte">Contact<span>Info</span></h1></div>
+    <div><h1 class="section-tilte font-sans text-4xl">Contact <span>Info</span></h1></div>
     <div class="contact-items">
       <div class="contact-item">
         <div class="icon"><i class="fas fa-phone fa-6x"></i></div>
@@ -241,21 +341,10 @@ function initMap() {
 
 <!--Footer content start-->
 <section id="footer">
-  <div class="footer container">
-    <div class="brand"><h1><span>K</span>avin <span>R</span>aj</h1></div>
-    <h2>Your Web site</h2>
-    <div class="social-icon">
-      <div class="social-item">
-        <a href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADYklEQVRoge2Yv2sUQRTHv2/vckn0iDEQU5gYtDCCnViLhaAgimKp2AjX2ohoZyGINlqaVvyBIiI2dkL+AUUsg4jkEBX0olESze08i7vszu7MvJ29W02EfdXdm3nzPm9mvjuzC5RWWmmlraeRq2Hk3IOjHNIsgO0E7noZ0U/NR4ZP78taInv82k/S4zlqb4K40brXeG7jDFwFcDu4DXBv8JwPntzwADAJplkXp7MAkJqMlycnvObzgZfiAYCYp1yYVSd/UfCstfcG70IEIK3AfwAPCCuQFqEb3iwyCZ+GZJAKwWoVUCGYFShabwKCCqha0+DlItwF/A14FWJzNcTZQ3tweN9O7J4cw3Ctg7C0/ButpRUcuHgfQWXAC14uICd8pBkBfmZiCI8uH8eObSNGttH6EKbGR+wzL2ylDA0UBA/GpkobDy8ds8Lbcibj3ZYpYoq2kgTPAjxAahVnDs5gemJLNnuGsNMmbqEYXhvcCu9OTmCwCnFk/y4jw6fFnzh97Slevv3c7c4gCgx453VBKqAoeACACrF3etzIceXOHF69/waq1eO+7A8PiFuoIHgArBRG64NGhhevF4CgGscnJs2mrVwFFAO/5qtVK8bIX74vp/ql4BOrYTdBA4D1dBXuNS54lwhDpTozmDqxI3jI8XIBfVzKeHUZHLa1duXIoaBWlhLwQbUGBDUveLmANHyOew2HbSw+Pi8PDaD15ELi/9W7c7j17A0MeKGGTBH3finLb/PNrwCtSdcmbNPEFZAvZWl4h7Bz2PyHVnfUJLz0KHWuwL+GDxXj3cfF+EUkAV+AiHVfYlDL9iIKsPXUzdjHytjvADB28gagzS9VKqDAH14uoEd4AAgGhhM+9euHY3xCMFhPxtvghRr8rtPCAaX3JUdB2cJOTogJ389JvIHhAc+TuCd4r5PUF74PERcBL94oWW/PBw9kbKHC4J0L4AdPQg3CdyEbfOyzwyd95qUsnUOO7+RxxwM5RFw0fFZ8J092vFxAYfB+ItZ95BWf8yTOgk+8FvqIkNEXPJDjJM76XkPSbCLA2InrxmOSiMy+zgdD7gKKgQcDVBvu7lXXAeX7VMtVQDHw8Tnghrd+AfGAB2QRNzcOPC/kLyDkBoDm34FnN3wkbA1eUcPJWVpppZW2rvYHKHvlr5AZFLMAAAAASUVORK5CYII="/></a>
-      </div>
-      <div class="social-item">
-        <a href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAARv0lEQVR4nO2be7BdVX3HP7+1H+dxb0LekOTeJEKkJkBTkeZWRQUFIiJa0Vof6FgVHzOtU0orYGsp1Slgq8zYqkNGB8c6PqYygygyhFFRdHhKgBARQiD35l4uckkCIffce8/ee/36x9p7n73PI/ck0D867W9mzdpn773WXt/v+v1+67ceB/6PixxNIZ15+mUQXwe8HqgcYemXuklN0NtR+YjUh8aPtPBREjD+a+A1fbzZ9bIvkZ4/esktUht6yxF+Bf9IC6SyqfcjLWVdn80r0vaqFjjoScbr+qy8JOZoCoHc0XlPXUqz0r3yzT6kS7n8sldduv0IPpDL0RGgehHoNmCuE3hvwKraV+ryQXp/h1mQW8H/4NFAOSof0Eu0MT6E2K0o5wI9wBy5iKTNFD5L9YUviJzUfEkq5iUmAEAbE8Oq8ViXJ0dYU2fTpF5fKLL8haNrWXc5Sh/Qr3Qxh3bz7ukmutxsNC5W3XWEw+7h5SU2gYlh1Wgr8ObWzY6LPkVKWZcfLdPoeL8rrCbwS/AuktrKPV1r1OmxVRjvStCzgHXl8toVTNnO28f9Xg6ty6PDDnPSk4gjJAHgdqkNndlRkzYmhhHuAT2ua6PbwMeJ8NN7fX5+X8DOJz2e3SfEs5ZAEwK1+Fh8TRMWTzXPDYqHYtJryVI+3BfZEVRI3wCLENYMi5YKa44XXjXi8cebDZ7fen8eEmakNlTvQsD4jxDe2g/4n97r86Xv1hmdNASaEKolxAEPNMFXS9CFAA+Lh+YklAkgz9u+noNXBItgxeWJCAnCslUe7/6gz2kjXh8k6B1SG359JwEz4w2g1ok/Q69YhS9/r8rXb6oSalJIlqBAQFAkAIunFh/FU1vq+YyEDHzX5hYJSIFn4C2OgFgMVgznXBBywYUBUgTeMpFZkF+A+UTRBxRD4aQDPFrKv/z9Kt/6YcACbZYJoABck47e97Wt57EYpaz+pd5o/SgSYLWgAerAWzHEKiRi+PkNCZ5Y/vTCSqES/QkqH+81UWoRIHIbqu8ogS84stvv8/n+jYYF1oGvFAgIsC7vQoBHqvqpCZR6P7f7TtUvR8AOdOYDbAo4SbUhxpDgiPjlDxJOONHjlM1+isH0BF8mAHspyBuAJaXOxzm8rf/pMZg0c+A5Aanqh7nzS1Lwmqt/kYSy6pdtv+UApaB7ggVU2+w/IyHNMy2IE8PNX3+BjacuLjjG3tLyndXhXTq7dwTkalTPBhZmLPz6HnhuImJQYypt4HMfoAk+loqnHL9pAes3H8PS4RoLj6tQXxyUhivjC0HNKzUknkmwsW0pgMLs/jkOPT3L82PTjN+zj6ceeI44UqwICU4DEgxxnrs0PWn57V1znHJ6BcRu1cbEx6W+em83AuYNhFR3hh/+4IKbpp+Nt1TaCWhT+1PfspzXfGCIBSte0mAtl0MTDe7/6qOM3jGVjgDG9XrqCGNxBETiseHMOhdcsqgM03XCHpDbsNEVMrBusq9I8H1v3vVoTZMTMwLawVd8ZcvFx7Px3C4hxP+APH7DHrZ/5XdEsRCL8wFF8LEYFqwOuei6YwuaJ+3D4iTK5r4WRBba5irX83Gu8o4A1/NnfrIM/uDoIUZv3suBHfuYnZgm2j+b2790cX4CeDUf8d3URAE8IVxao7KqzjEnL+XYs4epHefil/XvXEdYNdx39Q5ilRx8jMFDiTA093Xp28LoAqwE/Y++CFhgm4Plcb/l/NafvpST3zGUf+CRbzzKE996DGOTHHS94PykbezP29OIS+0ESA40OPT4fl64Y5y9X3+YNR/ayNoPbQCBNeet4bmH97PnR3uJscRqiMVLHa5Hs+FqUdVUC/JhkYJJnN0XAQM2Kji8Vqp4lpFPrs/f2/XNRxm7/rdU24IeD1uI/IrAuwx/OQGFYQ/BNi1PbX0IiRPWXHQyACd+6ER+f8sYzTgbaRSDcQSL16XmDon6IqCuzZLtZ2aw+rQlDK52ajn7dIOJ63dS16Q19KW5U3sQbR/2us8Qs8Bn8LVDrLr8T0Bh71V38fydk0xdv4PlZ6+htm4h1WPrrPijxUzdO5WCL2taj8pbZiDcNu96gOrOcMBG5EldqmvE6s3L8vee3TZKLWpSsxE1jakWHGYxL44iQY+Ukbz6shGC5XWCFXWGLxtxTtcmHPjx7vy7yzevyE2yODxXNCHTJS2E8wXZB/ayXAPcVFiuRN1UOCukDWVAo7ZGu9h/4dqBvLa5Hc9Q1bgj2DG5IiuIUh9ZxeBZJ1DddBz+Clc+fmaa2QcmOfTT3czcPZ52UdvcHwg0wSLMPfh0fn9g3QJCTUo931m62KMcxOg20Mukuma3XwB/D8rqbmUGbDMPdoJC3J95ZQAmDlLRpDDDS0ByCyZYt4hlnzmT6qaVHfUHaxcRrF3EgrdvYPbBp9j3Lz+juec5nr3q5yy7/AxQmLrqDnwSVA06fjAvW1k54L7bDl7ADKybd5h3GiDmOtCu4AFq6fCXh7xprB8sCPJ3vOcaoDEiCWRRuljAUnvVapZfcz5mcP4AqbppFSu/8WdMXXoTs3fuYvxtuwGDqkHEIHjo/tayoL8wxFfrgAvIES48pQTwpl4+A6BuYwJaIW82vRWvsDKTzGBkNgWdFHp+cQm8RgnTN95PY9sOoieeASA4fgX1Lacw8PZTkcDDDFZYfs35PPPRb9McPZCDVzxUE6Dl4cUIPjYF3n1UmZ+ArlNhVyFATaN8ju/lszyLeC0fKnYWI3OIuFl6NoAtufycHHwydZD9l3yb6PFJVyZbXdo5zcGdTzLz4/tY8m8X4i1bgBmssvjyLUx94ltoCl40QcVDac0ZxBenAQKoAUmKk9h5xSEQua0Eu209v92j+xJhZA78wgQnJcCQ5jJHbWSYyqZhV2cUc+BvryfZPZo/N9JMk7tOdo1y4NPfRCPXH5VNw1RH1mAkwtBEJHKJqNU4z2CIC2sPmndW/wRgLwX293opG7oCjVKQDoCYggnYmQKwOTyZpX7WK/Lnszfeid29p/ROJxFNksf2MHPTXXm5+ptegRA5EiTCpNf5d40gEiMFEjIt7ZsAqQ7vwjAC3IBysP2lQBO8tkZ7MgcFEzB2puOd8A9bC8tzt93VBrhdA+YQmcPQpLnt7rxcuGkdRpp5zzstaIXNeIKROCUh80+OBDu9R10aVTs9+pQ2xr6k+mS1iK24HvA48K5uLO3e/FU1EiG4D5k0LzpBk8ykDbOIOCdolh+TP9dR1/vdjTONC1VADMmTrY0lb/lCB1otKhbFlkxUPOPWhMR5HaOCp4JtGw5EZCVwMTOBApd0EHA48WQu7YHYsZ0SUBTDbA4cknQ0KD5vojKX0dEBHhVUBDDgtYZXrGKI0HRIRRW8tiBJYlBBEJCUhEK82ybvLxLQ19ZY0e5dco6OxJbfKTwzModOtdyKd8KxiIld8tLcJC6XCDFRqupNgnXLW/j3PZfbvyM+wnitQUsTtyronrk1IhFnCt1FSyNe/wRkKffys2hXAuYwpomYiPjhR/Ln4ZbTwU9c8iz4tnztuSQmIdzSOnwSP/RoQfsiN+v3CxqUpCZXAO/Wino6we8cNQElJ8cc2AIBZg7xohSYhcAS/erXLQLOOwvvD9a2nvttJHgu9zasI3zrG/Ny0e13tpxf7nsK4GxRA+J0p8CF4W0yCXyR2uw/FG/25QOMzKVDUZw2xn2QpKBNvgXjJjyIglHiB7cT73wE/6QN4PvU//kzNK78PMkTT7gyKq1cwVu/noF/uhR8F+nFO35H8psHMGJQBZutZxQIcCaQgBhEPZTEhcyaHMFcYD4CcE6wRIAkbQQkLQLyHGa+9u8MXvOvyMAAZskSBr/4BZq33Urzl7dj94yCgln7MsI3nEF4zjk5eD00zcy1XwPjwIqNMKpYAfE6TQA1qQkYUC91xvNL/xqQExC7HjBaJiBQMCkJBSLs1B4aX/oc9Us+i9QHwPcJzz2P8Nzzen5Pp6dpfP4a7FMTzuOLBQxiE0QFKfoA6zRA8Zz9axYq94ju27H1S4Anc4iJUkfmbFenD+XvyPIBCONyClyKHrufQ1d+ivixh+f9VvzbnRz69N8R73zI9b5JyU6vjSSYxa11CHtwOnd++QKadA7DvaRPDWjmXhovbYyn2KlnMMNuQdQMLSfZPQXGokUzEECU5NknOXTNp/BPOo3wtDPwXn4yZskKB2LfFMmjDxPd9Svi7dvBGkhXiBEDOA1wW10J3qolLQIm97kJmKaaIElqAv3Nhvo7J+gnDrhnSyl5ahT/1FMB8DZuIB57yD3LCaA1QU/z+LG7iR+723k0TZMVSATJgBe1N8bN8lBQC2rwN56QP05GJ1OCEkS8dN1RUSx2elS77As0ge2IvUKqa24tmYDqk1WdHb9WG3sntbFXtTGm2hjTfLjyEwiSXMXjnffmZcM3nAMVW3ietJlDWjYoXieFei3qJ6hfuJeRnfkVoxB6BG9qxQnRPTtTE7COJFzE6EyhPRoUgBAYQc0tOju2pewD5oKrUP4aobzF42fAWuA0jIke/w12v1vU8FaupXr+e7uDL6Uk9w0lAnLfYtE2TXNa5TSr+oF3Yo51i7F24hmi7Y+AZMth2RKcdi4NdTl0hporywSovKcLY63GpiA0SMGYWWZvuT4vXj3vo1Tf9mGoA2HUHXymDWFBG7KgKANbIiE1PV+ovP9dVN53Qf69meu+jyRxOuRlGpCB1zKG7mtFG9t8QHGa1apDjgnQaDpVT9vqLc/SvO9G/JdvJNx8PohQPesjhKe9heaOW0gmdmAPjGMPTYFNXKVWIE7Q2RlIpKXacbHRuMnNwkWYZavx159MeMbZmKGh/HHzh9uIfnE3TqMdeKf2iqjiDRSg9Q6HdpYJEL6L8jd5KVHXkGWD2H3PU/IFhTC28aPPo8xQ2fxuAMyilVRf9+GeX32x0rz1Z8x85ZuFTZbM8WUkKt7SGl02RIuiiLmiTEAl+nvmAlDeC6zM1MBbv4bk4FibzZY1YWbb1cTjv6H2xr/CLBrq9sEXLXZqirnv/BfNm38GiYcbGttUX911+IqlaakO8E3gfsRcIdVV23rvHzTGhxC2gp4bbb+H6W9f2xoFUq/tNMADz0M9D4yBoEIw/Er8dSN4S9ZiFh6HqS9xa9aZhhsfCcvnsbTZcJFlvomj2OcPYKd+j907Rrz9AeIHH4EZhdi4lHhYG2C1gqXi8jQt/sezqJ+xFpCfoPQ8JnPYyYI7O6hjJDEHr70Y+/x4YfgS8H0H3PPd8phJSTDZ4kZWkdsXRK2bQSbWgU1iJEkgjiEWiLy25EPkIW2/ib2cBLUhlgpJAbwZWsGKb7zTbbcrw4c7I9TfWWHPp3behVBNoBJD6KFhiIYhhBUIQzSs5Pc0CCEIIUzzIECDAPVdwvfzpKkGlSPNLqkYVJWiPC0nEY752Ob8rMF80vOt9OTo1ux3sGGE6ukXODBhCi4DXPhdSkEIYeBSEECQgvZ9N+vzCsmYQsxfmFaLc22liDLb/+rQX2HwPadSfe3a4q2t2pgY7oVTgHnOCBdZsczc9T1mH7wZAs8B8fyWHzDGARHJzuM4p2QtYjP1d6pPHCNxDFEMcYREEUQJNFNVb/qFaw8p3stNwEOTwJkANWp/fjqDf/FaMN0sWw+6/Q+9LF0ATvk87Bnh7tIc287M/T8gaewrq3GRgPy7joAMvCQxxEkK2oEnygiIoGlSoGUSJLtu+h0EsGoV9Y+dS/ial/fT/P2IjmQk+KBfBY7odFO45pWEQ5toTj5Ic3In8QuT2OgQaqPO3i8SkB52FFWwHupZNwESg4q42L39yGiXzpRaBVm0BG/dWoJXn0Lw6pNas8f5ZQnI1aRbANLzjHDfoqXscJty/f6FpnwEvuNpKZtnIOvVkoNSGz4G3HS4v6WTeRuUEVFsUMfmxIv7RunyaOsCkDwANO0boy+iUvLQU9ruHf7MRu+6iuWKJx9eFHhAdFt2aebbGD2K2l0q2nNPQnql9ltHQ2JPmcTyl9kPI9XhXYiOINwA2rEx+uKk0HDpQkrXJG2AXxLQAHuArdj4VVIfnnipKv1/+d8u/w0pugJiCgOrvQAAAABJRU5ErkJggg=="/></a>
-      </div>
-      <div class="social-item">
-        <a href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAE20lEQVRoge3YW2yTdRgG8Odta8GBzh3KoIOd7BzxiGICISCi3GDigQQmEYMYgk4JckEGKGAaTTSiaAwCTsF5gSEuiiEGvSIalwWIohciCE4YbMDKtnbrTh3t9z5ebMWNfB/raRsXfe6+Nf+3v6f/r/2WP5BOOumkk04SkbF408LdVx5UkRVULiRlGkAniYtUHlEba3xr8g5BhGZrsz6+VBBY574QvbYsULa/290XyvA3vCihVMFLqvyZYeVuQJeREBIACBJg/wVIgsRREa5qfm3Kyeja7O3NswXGJqr86690rx+2wN1fdX1BSuYpZ0Y5ysVIFj9tR4ubDjks4PR+sCV+4FraCW4leS+IRSQLSPjtevWelg3FzTcs4PmB45z+nlaAEwF8OSl/wuqfF0gkUXxR9bnxRui2WoAPx4aH2WsRIZa0VeYfHDzbZvaG4/w99w/gQXJlc2P3gZlVzEi0QKR34tok8d0gl9t49VjWtguvZL3X9DpIsSxAgXvwYIBPdo0P1pXtDZbFrffSIYINSeABsJHA9jAclwFZB/btin7JTQuIoZ3/L44Okhm083hpdXsFvDRdZ5Z8V+s8ErlJ4EFiOsmpAJoiEXkqsOnOjuh8U0jYbjQMxV8bNIHEbk9Bx6/F1f55sRQQG+9LEj/wd/7uIGd1vjH1zOD5pgXO/JPZAEiD+SCA5ENiyC/FewK1hZ8FFqOGdqsCpM2VPB5nx4nzkdaNBZeun29+K3hFCe658ScHgJwr4IHCQNvloqq2qsJPrzxRsKs9a/AoobYmiQfJdl/l5G4zquVzwLOv7XZbxPEHiRJTvEUxgCRxhorTAjYaQB7IJYnjAYJ1wY0Fc82cDqsC9c/nBD3VHctBHgaQESMe7H/ClkFYpkR0QeL4/teCVk7TW6i0uuO5u6qDNYDhAvACSV+M+GR+Kq3wAHntf5/rY7EDbFFyKWBbGscnPzJ4EArWWxUw3QGbho8CCN8MeBIQ4nhcBU6vcnWS+t3NgCcZ7go7j8VVAADE4Fsk+sYYDwhq4XX3xF2g/qWcvwCuH1M8ACq+tTLesAAAnFudvZPK9QAiY4In+2yRyDcJFwCA8xU5H0Iwn2TdKOMBYH+X13MlqQKFVS1TDDXuEOhGAl4q/KOBJ6E2MbYP57N8Ekdjh71HaXytlIkkABkVPATY17XZc2I437A7cPbl7A6lvDNat80APkgxtgxni6kAAFzMzdkG8NBo4AFAicreLZ7GlBVAuRiRHn1Wge9HGg/yYGhr0ecxuWIuAMBXObm7eY3raSVXkWgYCTzJU71qrLA61DJLYidzNbS7mi7PgU3mULkMwIwU4M9D5dGQt7ghHkrMOzAk5WKEpe9PKksBPJAavP2xePFAAjvg/uBSbtiBCirWApiUAvwRux2LuzeX+OK1xFwg7yNfCYQLCH2clGdI3joUkhBeobqjl7ZN8BYnfP46tAApU3e2LIoAFSBzQbpITCajp3Sp+cIScgLUV0NvltQmCjcvMJD8T5pyIoZjM4DVKcVD6qn6dkiL98ErmizeskA0ee83T1Anl0CxkuR8AJIAPqDKHwnZG9pS+FM8P5FJFxiczHfPZ9lucc4W6iwRzlQin2Q2BDlUjCfZSSIA0KeUk4D+rWBtr6fot1Qcz6eTTjrppDMi+Q8fgF/hmeYFBwAAAABJRU5ErkJggg=="/></a>
-      </div>
-    </div>
-    <p>Copyright © 2021 Shri Amman Batters.All Rights Reserved. </p>
+  <div class="footer ">
+    <div class="bg-midnight text-center"><h1>Shri Amman Batters</h1></div>
+   
+    <p class="text-center">Copyright © 2021 Shri Amman Batters.All Rights Reserved. </p>
   </div>
 </section>
 <!--footer content end-->

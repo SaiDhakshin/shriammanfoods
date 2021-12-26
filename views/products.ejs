@@ -33,7 +33,7 @@
                             <button class="btn">Delete</button>
                             <input type="hidden" name="id" value="<%= p.id %>">
                         </form>
-                        <form action="/admin/dashboard/update>" method="POST">
+                        <form action="/admin/dashboard/update/<%= p.id %>?edit=true" method='POST'>
                             <button class="btn">Update</button>
                             <input type="hidden" name="id" value="<%= p.id %>">
                         </form>
