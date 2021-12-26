@@ -538,8 +538,8 @@ exports.postConfirm = async (req,res) => {
                 })
                 
                     let transporter =  nodemailer.createTransport({
-                        // service : "gmail",
-                        host : 'smtp.google.com',
+                        service : "gmail",
+                        // host : 'smtp.google.com',
                         port : 467,
                         secure : true,
                         auth : {
