@@ -543,7 +543,7 @@ exports.postConfirm = async (req,res) => {
                         secure : true,
                         auth : {
                             user : 'saidhakshin75@gmail.com',
-                            pass : process.env.Gpass,
+                            pass : process.env.GPASS,
                         },
                     });
                     
