@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <title>Add product</title>
+</head>
+<body>
+    <ul>
+        <% if(messages.success_msg) {%>
+        <li><%= messages.success_msg %></li>
+        <% } %>
+    </ul>
+    <main>
+        <h2><% if(edit) { %>Edit<%  }else{ %>Add <% } %></h2>
+        <% if(edit && prods) {%>
+            <form action="/admin/dashboard/updated" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Product name" value="<%= prods.title %>"> <br>
+                <input type="number" name="price" placeholder="Product price" value="<%= prods.price %>"> <br>
+                <input type="file" name="imageUrl" placeholder="Product ImageUrl" value=""> <br>
+                <input type="text" name="description" placeholder="Product description" value="<%= prods.description %>"> <br>
+                <input type="number" name="quantity" placeholder="product quantity" value="<%= prods.quantity%>">
+                <input type="hidden" name="id" value="<%= prods.id %>">
+                <button type="submit">Update</button>
+    </form>
+        <% } else{  %>
+            <form action="/admin/dashboard/add-products" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Product name"> <br>
+                <input type="number" name="price" placeholder="Product price"> <br>
+                <input type="file" name="imageUrl" placeholder="Product Image"> <br>
+                <input type="text" name="description" placeholder="Product description"> <br>
+                <input type="number" name="quantity" placeholder="Product quantity">
+                <button type="submit">Add</button>
+            <% } %>
+    </main>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+</head>
+<body>
+    
+      <div class="card">
+        <h2 class="flex-auto text-3xl font-semibold text-gray-900 ">Thank You!</h2>
+        <p>The ordered product will be delivered to you shortly . <br>
+        Enqueries can be asked to this number.</p>
+        
+        <h2>Your Order Summary</h2>
+
+
+        <h2 class="heading">Orders</h2>
+        <% if(orders) {%>
+
+            
+            <table align="center">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Invoice</th>
+                </tr>
+                <% if(orders) { %>
+                    <tr>
+                        <td><%= orders.name%></td>
+                        <td><%= orders.mobile_number%></td>
+                        <td><%= orders.address%></td>
+                        <td><%= orders.product%></td>
+                        <td><%= orders.quantity%></td>
+                        <td><a href="/admin/dashboard/orders/<%= orders.order%>">Download</a></td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+        </table>
+
+      </div>
+   
+</body>
+</html>

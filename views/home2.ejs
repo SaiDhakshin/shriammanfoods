@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- fontawesome -->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="/js/script.js"></script>
+    <title>Shri Amman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <!-- shri section -->
+    <section id="batter">
+        <div class="batter container">
+            <section id="about">
+                <div class="about container">
+                  
+                    <div class="col-left">
+                      
+                        <!-- <img src="/img/batter.png" alt="img"> -->
+                        <img class="logo" src='/img/logo.jpg'>
+                       
+                      
+                    </div>
+                    
+                 
+                      </section>
+                      <div>
+                      <h1>Welcome <span></span></h1>
+                      <h1>Shree Amman<span></span></h1>
+                      <h1>Batters<span></span></h1>
+                      <a href="#order" type="button" class="cta">ORDER</a>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                      <h1>Made For Dindigal With Love</h1>
+                    </div>  
+                    </div>
+                
+        </div>
+    </section>
+    <!-- shri name  section -->
+
+    <!-- showcase -->
+
+
+    <section class="font-sans text-5xl card">
+      <h4 class="text-center font-sans text-6xl">The Benefits of our Traditional Breakfast</h4>
+      <br>
+      <h3 class="text-center">Idli</h3>
+      <br>
+      <p class="font-sans text-3xl text-center"> This healthy food is loaded with numerous health benefits. It is easy to cook , digest , lose weight<br>
+      easy to count your calories , loaded with iron and contains a good amount of fibre.<br>
+    It is oil-free and steamed in such a proportion so as to serve your delicious meal and fill your stomach.<br>
+  Did you Know that WHO reported that Idli is the best diet food in the world.</p>
+  <br>
+        <h3 class="text-center">Dosa</h3>
+        <br>
+        <p class="font-sans text-3xl text-center">
+          Dosa is easily digestable . It is a source of Vitamin C , which is an essential nutrient which is <br>
+          required by the body for developement and maintainence of blood vessels , cartilage and scar<br>
+          tissues. Dosa are low in saturated fat and healthy for your body.
+        </p>
+    </section>
+    
+
+    <!--Service section start-->
+    <section id="services">
+      <h1 class="product_title black card">Buy</h1>
+      <div class="services container ">
+        <!-- <div class="service-bottom " >
+                  <% for(p of products) {%>
+                    <div class="service-item wid">
+                      <h2><li ><a class="product_title" href="products/<%= p.id %>"><%= p.title %></a></li></h2>
+                      <li class="product_title">Rs:<%= p.price %></li>
+                      <div class="flex">
+                        <div class="image">
+                            <img  class="image" src="/<%= p.imageUrl %>" alt="<%= p.imageUrl%>">
+                        </div>
+                        <li class="description"><%= p.description %></li>
+                      </div>
+                      <p><li class="description"><%= p.description %></li>
+                        <form action="/cart" method="POST">
+                            <button class="order">Add To Cart</button>
+                            <input type="hidden" name="id" value="<%= p.id %>">
+                        </form>
+                      </p>
+                      <form action="/item" method="post">
+                        <input type="hidden" name="product_name" value="<%= p.title%>"> 
+                        <input type="hidden" name="id" value="<%= p.id%>">
+                        <button class="order">Order</button>
+                      </form>
+                    </div>
+                    <% } %>
+      
+                       
+                            <div class="service-item">
+                              <h2>More Coming Soon!</h2>
+                              <p>We are still improving the Site.</p>
+                            </div>
+      </div> -->
+
+              <% for(p of products){ %>
+              <div class="service-bottom wid " id="order">
+                
+                <div class="flex font-sans scale-150 m-8 wid" >
+                  <div class="flex-none w-96 relative image">
+                    <img src="/<%= p.imageUrl %>" alt="" class="absolute inset-0 w-full h-full object-cover ib" />
+                  </div>
+                  <div class="flex-auto p-6">
+                    <div class="flex flex-wrap">
+                      <h1 class="flex-auto text-3xl font-semibold text-gray-900 text-center">
+                        <a  href="/products/<%= p.id%>"><%= p.title %></a>
+                      </h1>
+                      <div class="text-lg font-semibold text-gray-500">
+                       <%= p.price%>
+                      </div>
+                      
+                    </div>
+                    <!-- <h1 class="flex-auto text-lg font-semibold text-gray-900">
+                      <%= p.description%>
+                    </h1> -->
+
+                    
+              
+                    <div class="flex space-x-4 mb-6 text-sm font-medium p-6">
+                      <div class="flex-auto flex space-x-4">
+                        <form action="/item" method="post">
+                          <input type="hidden" name="product_name" value="<%= p.title%>"> 
+                          <input type="hidden" name="id" value="<%= p.id%>">
+                          <% if(p.quantity < 1) {%>
+                            <h2>No Stock!</h2>
+                          <% }else{ %>
+
+                            <button class=" ml-64 h-10 px-6 font-semibold rounded-md bg-black text-white" >Order</button>
+                          <% } %>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+                </div>
+              </div>
+              <% } %>
+          </div>
+          <ul>
+            <% if(messages.success_msg) { %>
+                <li><%=messages.success_msg %></li>
+            <% } %>
+        </ul>
+        
+      </section> 
+    <!--service section end--> 
+
+    <!-- map -->
+<section class="card">
+  <h3 class="product_title black">Location</h3>
+  <div id="map"></div>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeXSkV2QE3Jw1YvcYUxY-vIMr1OyXureo&callback=initMap"
+  async
+></script>
+</section>
+
+
+
+
+
+<script>
+
+function initMap() {
+    // The location of Uluru
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude + "," + position.coords.longitude);
+    })
+    const uluru = { lat: 10.351582, lng: 77.974320 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 14,
+      center: uluru,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
+  }
+
+
+
+</script>
+<!-- project section--> 
+<!-- <section id ="projects">
+  <div class="projects container">
+    <div class="projects-header">
+      <h1 class="section-title">Recent <span>Projects</span></h1>
+    </div>
+    <div class="all-projects">
+      <div class="project-item">
+        <div class="project-info">
+          <h1>project 1</h1>
+          <h2>love dosa</h2>
+          <p>region of Guria between 1902 and 1906, against the Russian Empire.
+             It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns.
+             The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire</p>
+        </div>
+        <div class="project-img">
+          <img src="/img/batter.png" alt="img">
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-info">
+          <h1>project 2</h1>
+          <h2>love dosa</h2>
+          <p>region of Guria between 1902 and 1906, against the Russian Empire.
+             It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns.
+             The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire</p>
+        </div>
+        <div class="project-img">
+          <img src="/img/batter.png" alt="img">
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-info">
+          <h1>project 3</h1>
+          <h2>love dosa</h2>
+          <p>region of Guria between 1902 and 1906, against the Russian Empire.
+             It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns.
+             The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire</p>
+        </div>
+        <div class="project-img">
+          <img src="/img/batter.png" alt="img">
+        </div>
+      </div>   
+
+       <div class="project-item">
+        <div class="project-info">
+          <h1>project 4</h1>
+          <h2>love dosa</h2>
+          <p>region of Guria between 1902 and 1906, against the Russian Empire.
+             It arose from a revolt over land grazing rights; taxation, land ownership and economic factors were also concerns.
+             The Republic established its own system of government, although it was not anti-Russian, desiring to remain within the Empire</p>
+        </div>
+        <div class="project-img">
+          <img src="/img/batter.png" alt="img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--project section end  -->
+
+
+
+<!--start About Section-->
+<section id="about">
+<div class="about container">
+  <div class="col-left">
+    <div class="about-img">
+      <img src="/img/batter.png" alt="img">
+    </div>
+  </div>
+  <div class="col-right">
+    <h1 class="section-tilte font-sans text-4xl card">About <span>us</span></h1>
+    <section class="font-sans text-4xl card">
+      <p class="font-sans text-4xl subpixel-antialiased">In 2014  , We dreamed of sharing healthy idli / Dosa batter .
+         So we thought and started a company in Dindigal.
+        We make idli and dosa batter for our Customers just the way they made it at home.
+        Soon there were none left at the shelves because people loved our healthy preservative free Batter.
+        We are making a high quality "Idli Dosa Batter" under very hygenic environment.<br>
+        <br>
+      We are using the best in class dhal and RO - purified water with no other preservatives or soda added.<br>
+      <br>
+    We are making this with great love and care , which suits for all ages from kids to adults.<br></p>
+
+    <ul>
+      <h4 class="text-4xl">How To Use ? </h4>
+      <br>
+      <h4>To Make Idli</h4>
+      <br>
+      <li>Open the pack and add salt if required. The Batter is mildly salted only.</li>
+      <li>If you are making idli , directly scoop out the batter and pour it into the idli streamer.</li>
+      <li>Stir the batter before pouring it into the moulds of the idli steamer for the soft idli.</li>
+      <br>
+      <h4>To Make Dosa</h4>
+      <br>
+      <li>If you are making dosa , add some water to dilute the batter.</li>
+      <li>After dilution , the batter can no longer be used for making idli.</li>
+    </ul>
+    <br>
+      <h4>How To Store ? </h4>
+      <br>
+      <ul>
+        <li>Refrigerate at 0-5 degree . Bring the batter to room temperature before using it.</li>
+      </ul>
+      
+    </section>
+       
+  </div>
+</div>
+</section>
+<!--About Section end-->
+<!--Contact us -->
+<section id="contact">
+  <div class="contact container">
+    <div><h1 class="section-tilte font-sans text-4xl">Contact <span>Info</span></h1></div>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="icon"><i class="fas fa-phone fa-6x"></i></div>
+          <div class="contact-info">
+            <h1>Phone</h1>
+            <h2>63823362**</h2>
+            <h2>93442236**</h2>
+          </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon"><i class="fas fa-at fa-6x"></i></div>
+          <div class="contact-info">
+            <h1>E-mail</h1>
+            <h2>dwanyeJhonson@gmail.com</h2>
+            <h2>dwanyerock@gmail.com</h2>
+          </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon"><i class="fas fa-map-marker-alt fa-6x"></i></div>
+          <div class="contact-info">
+            <h1>Address</h1>
+            <h2>63823362**</h2>
+            <h2>93442236**</h2>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Contact us end-->
+
+<!--Footer content start-->
+<section id="footer">
+  <div class="footer ">
+    <div class="bg-midnight text-center"><h1>Shri Amman Batters</h1></div>
+   
+    <p class="text-center">Copyright © 2021 Shri Amman Batters.All Rights Reserved. </p>
+  </div>
+</section>
+<!--footer content end-->
+
+</body>
+</html> 

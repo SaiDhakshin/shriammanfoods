@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h2 class="heading">Orders</h2>
+        <% if(orders.length < 0) {%>
+            <h2>No products!</h2>
+        <% } else {%>
+
+            
+            <table align="center">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Invoice</th>
+                </tr>
+                <% for(order of orders) { %>
+                    <tr>
+                        <td><%= order.dataValues.name%></td>
+                        <td><%= order.dataValues.mobile_number%></td>
+                        <td><%= order.dataValues.address%></td>
+                        <td><%= order.dataValues.product%></td>
+                        <td><%= order.dataValues.quantity%></td>
+                        <td><a href="/admin/dashboard/orders/<%= order.dataValues.id%>">Download</a></td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+        </table>
+    </main>
+</body>
+</html>

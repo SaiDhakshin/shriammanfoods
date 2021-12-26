@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>
+            Login page
+        </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <ul>
+            <% if(messages.success_msg) { %>
+                <li><%=messages.success_msg %></li>
+            <% } %>
+        </ul>
+        <ul>
+            <% if(messages.error) { %>
+                <li><%=messages.error %></li>
+            <% } %>
+        </ul>
+        <form action="/login" method="POST">
+
+            <p><a href="/admin/auth/google"><img src="https://img.icons8.com/color/48/000000/google-logo.png"/></a></p>
+        </form>
+    </body>
+</html>

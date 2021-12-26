@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>
+            Products
+        </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <h2>Products Page</h2><br>
+        <br>
+        <a href="/cart">Cart</a>
+
+        <ul>
+            <% if(messages.success_msg) { %>
+                <li><%=messages.success_msg %></li>
+            <% } %>
+        </ul>
+        
+        <div class="item-container">
+            <% for(p of products) {%>
+            <div class="item">
+                
+                <ul>
+                    
+                        <li><a href="products/<%= p.id %>"><%= p.title %></a></li>
+                        <li><%= p.price %></li>
+                        <div class="image">
+                            <img  class="image" src="/<%= p.imageUrl %>" alt="<%= p.imageUrl%>">
+                        </div>
+                        <li><%= p.description %></li>
+                        <form action="/delete/<%= p.id%>" method="POST">
+                            <button class="btn">Delete</button>
+                            <input type="hidden" name="id" value="<%= p.id %>">
+                        </form>
+                        <form action="/admin/dashboard/update/<%= p.id %>?edit=true" method='POST'>
+                            <button class="btn">Update</button>
+                            <input type="hidden" name="id" value="<%= p.id %>">
+                        </form>
+                        <!-- <button><a href="?edit=true">Edit</a></button>
+                        <form action="/admin/dashboard/delete/<%= p.id %>" method="POST">
+                            <button>Delete</button>
+                        </form> -->
+                </ul>
+                
+            </div>
+            <% } %>
+        </div>
+        
+        
+            
+        
+    </body>
+</html>
