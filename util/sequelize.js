@@ -1,28 +1,28 @@
 const Sequelize = require('sequelize');
 
 
-const sequelize = new Sequelize('authuser','saidhakshin','qmpzfgh4563',{
-    dialect: 'postgres',
-    host : 'localhost',
-    storage : './session.postgres',
-    dialectOptions: {
-      supportBigNumbers: true
-    }
-})
+// const sequelize = new Sequelize('authuser','saidhakshin','qmpzfgh4563',{
+//     dialect: 'postgres',
+//     host : 'localhost',
+//     storage : './session.postgres',
+//     dialectOptions: {
+//       supportBigNumbers: true
+//     }
+// })
 
 //PRODUCTION
 
-// const sequelize = new Sequelize(process.env.DATABASE_URL,{
-//   dialect: 'postgres',
-//   storage : './session.postgres',
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//       rejectUnauthorized: false
-//   },
-//     supportBigNumbers: true
-//   }
-// })
+const sequelize = new Sequelize(process.env.DATABASE_URL,{
+  dialect: 'postgres',
+  storage : './session.postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+  },
+    supportBigNumbers: true
+  }
+})
 
 try {
      sequelize.authenticate();
