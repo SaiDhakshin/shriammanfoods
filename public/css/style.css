@@ -87,7 +87,7 @@ p {
     left: 0;
     height: 100%;
     width: 0;
-    background-color: crimson;
+    background-color: #4FCE5D;
     animation: text_reveal_box 1s ease;
     animation-delay: .5s;
 }
@@ -105,7 +105,7 @@ p {
     padding: 10px 30px;
     color:white;
     background-color: transparent;
-    border: 2px solid crimson;
+    border: 2px solid #4FCE5D;
     font-size:  2rem;
     text-transform: uppercase;
     letter-spacing:  .1rem;
@@ -115,7 +115,7 @@ p {
 }
 #batter .cta:hover{
     color: white;
-    background-color: crimson;
+    background-color: #4FCE5D;
 }
 
 /*end batter Section */
