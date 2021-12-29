@@ -602,6 +602,10 @@ p {
     transition: .3s ease box-shadow;
 }
 
+.whatsapp-colour {
+    color: #4FCE5D;
+}
+
 
 
 @keyframes text_reveal_box{
